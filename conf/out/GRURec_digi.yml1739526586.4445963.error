@@ -1,0 +1,31 @@
+type: single # single|window, maybe add opt
+key: gnn #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: diginetica #added in the end of the csv names
+  folder: data/diginetica/fulltrain/
+  prefix: diginetica
+results:
+  folder: results/diginetica/GRU4Rec/
+
+metrics:
+- class: accuracy.MRR
+  length: [1, 2, 3, 5, 10, 15, 20, 50, 100]
+- class: accuracy.HitRate
+  length: [1, 2, 3, 5, 10, 15, 20, 50, 100]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+
+
+algorithms:
+- class: GRU4Rec_PyTorch_Official.GRURec.GRURecPytorch
+  params: {epoch: 20, constrained_embedding: True, embedding: 0, elu_param: 1, batch_size: 128, layers: 512, dropout_p_embed: 0.5, dropout_p_hidden: 0.3, lr: 0.05,  loss: "cross-entropy" , bpreg: 0.9, logq: 0}
+  key: GRURecPytorch
+
+  # GRURec-epoch=20-batch_size=32-lr=0.01-constrained_embedding=True-layers=150-loss=cross-entropy

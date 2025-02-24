@@ -1,0 +1,45 @@
+type: opt # single|window, maybe add opt
+key: baselines_and_models #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple
+data:
+  name: rec15 #added in the end of the csv names
+  folder: data/rec15/fulltrain/rec1By64/
+  prefix: rec15
+  opts: {sessions_test: 100}
+
+results:
+  folder: results/opt/rsc15_100k/
+
+metrics:
+- class: accuracy.HitRate
+  length: [5,10,15,20]
+- class: accuracy.MRR
+  length: [5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+- class: time_memory_usage.Memory_usage
+
+optimize:
+  class: accuracy.MRR
+  length: [20]
+  iterations: 100 #optional
+
+algorithms:
+- class: STAMP.model.STAMP.Seq2SeqAttNN
+  params: {}
+  params_opt:
+    n_epochs: [10,20,30]
+    decay_rate: {from: 0.0, to: 0.9, in: 10, type: float32}
+    init_lr: [{from: 0.001, to: 0.01, in: 10, type: float32},{from: 0.0001, to: 0.001, in: 10, type: float32}]
+  key: stamp
+- class: narm.narm.NARM
+  params: { epochs: 20 }
+  params_opt:
+    factors: [50, 100]
+    hidden_units: [50, 100]
+    lr: [{from: 0.01, to: 0.001, in: 10, type: float32},{from: 0.001, to: 0.0001, in: 10, type: float32}]
+  key: narm

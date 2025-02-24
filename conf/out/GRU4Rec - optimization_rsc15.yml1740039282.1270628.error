@@ -1,0 +1,39 @@
+type: opt # single|window, maybe add opt
+key: GRU4Rec #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple
+data:
+  name: rec15 #added in the end of the csv names
+  folder: data/rec15/fulltrain/rec1By64/
+  prefix: rec15
+  opts: {sessions_test: 2000}
+results:
+  folder: results/rec15/GRU4Rec/optimization/
+metrics:
+- class: accuracy.HitRate
+  length: [10,20]
+- class: accuracy.MRR
+  length: [10, 20]
+
+optimize:
+  class: accuracy.HitRate
+  length: [20]
+  iterations: 50
+algorithms:
+- class: GRU4Rec_PyTorch_Official.GRURec.GRURecPytorch
+  params: {}
+  params_opt:
+    layers: [32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 480, 512]
+    batch_size: [32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256]
+    epoch: [5, 10, 15]
+    learning_rate: [0.01,  0.015, 0.02,  0.025, 0.03,  0.035, 0.04,  0.045, 0.05,  0.055, 0.06,  0.065, 0.07,  0.075, 0.08,  0.085, 0.09,  0.095, 0.1,   0.105]
+    dropout_p_embed: [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5]
+    dropout_p_hidden: [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45]
+    momentum: [0.00,0.05,0.10,0.15,0.20,0.25,0.30,0.35,0.40,0.45,0.50,0.55,0.60,0.65,0.70,0.75,0.80,0.85,0.90]
+    sample_alpha: [0.00,0.05,0.10,0.15,0.20,0.25,0.30,0.35,0.40,0.45,0.50,0.55,0.60,0.65,0.70,0.75,0.80,0.85,0.90,0.95,1.00]
+    constrained_embedding: [True]
+    loss: ["bpr-max"]
+    embedding: [0]
+    elu_param: [0.5]
+    bpreg: [1.95] 
+    logq: [0]
+  key: GRURec

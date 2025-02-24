@@ -1,0 +1,28 @@
+type: single # single|window, maybe add opt
+key: simple_neural #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: rsc15 #added in the end of the csv names
+  folder: data/rsc15/fulltrain/rsc15By64/
+  prefix: rsc15
+results:
+  folder: results/rsc15/narm/
+metrics:
+- class: accuracy.MRR
+  length: [1, 2, 3, 5, 10, 15,20, 50, 100]
+- class: accuracy.HitRate
+  length: [1, 2, 3, 5, 10, 15, 20, 50, 100]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+algorithms:
+- class: NARMModel.NARMModel.NARMModel
+  params: {epoch: 50, lr: 0.0003,  l2: 0.00012, embedding_size: 100, batch_size: 64}
+  key: narm
+
+  # narm-epoch=50-lr=0.0003-l2=0.00012-embedding_size=100-batch_size=64

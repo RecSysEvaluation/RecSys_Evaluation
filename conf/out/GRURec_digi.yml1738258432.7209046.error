@@ -1,0 +1,29 @@
+type: single # single|window, maybe add opt
+key: gnn #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: retailrocket #added in the end of the csv names
+  folder: data/retailrocket/fulltrain/
+  prefix: retailrocket
+results:
+  folder: results/retailrocket/tagnn/
+
+metrics:
+- class: accuracy.MRR
+  length: [1, 2, 3, 5, 10, 15,20, 50, 100]
+- class: accuracy.HitRate
+  length: [1, 2, 3, 5, 10, 15, 20, 50, 100]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+
+
+algorithms:
+- class: GRU4Rec_PyTorch_Official.GRURec.GRURecPytorch
+  params: {epoch: 1, lr: 0.0007, batch_size: 64, embedding_size: 100, l2: 0.00001, constrained_embedding: True}
+  key: GRURecPytorch

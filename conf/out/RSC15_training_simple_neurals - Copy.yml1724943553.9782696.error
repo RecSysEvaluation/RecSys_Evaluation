@@ -1,0 +1,27 @@
+type: single # single|window, maybe add opt
+key: BaselinesAndBenchMarkModels #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: diginetica #added in the end of the csv names
+  folder: data/diginetica/fulltrain/
+  prefix: diginetica
+  opts: {sessions_test: 100}
+results:
+  folder: results/
+metrics:
+- class: accuracy.MRR
+  length: [3,5,10,15,20]
+- class: accuracy.HitRate
+  length: [3,5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+algorithms:
+- class: STAMP.model.STAMP.Seq2SeqAttNN
+  params: { init_lr: 0.003, n_epochs: 10, decay_rate: 0.4}
+  key: stamp

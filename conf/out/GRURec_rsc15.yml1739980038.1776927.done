@@ -1,0 +1,27 @@
+type: single # single|window, maybe add opt
+key: GRU4Rec #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: rsc15 #added in the end of the csv names
+  folder: data/rsc15/fulltrain/rsc15By64/
+  prefix: rsc15
+results:
+  folder: results/rsc15/GRU4Rec/
+
+metrics:
+- class: accuracy.MRR
+  length: [1, 2, 3, 5, 10, 15, 20, 50, 100]
+- class: accuracy.HitRate
+  length: [1, 2, 3, 5, 10, 15, 20, 50, 100]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+algorithms:
+- class: GRU4Rec_PyTorch_Official.GRURec.GRURecPytorch
+  params: {epoch: 10, loss: "bpr-max", constrained_embedding: True, embedding: 0, elu_param: 0, layers: 100, batch_size: 32, dropout_p_embed: 0.1, dropout_p_hidden: 0, learning_rate: 0.1, momentum: 0, n_sample: 2048, sample_alpha: 0.75, bpreg: 0, logq: 1}
+  key: GRURecPytorch

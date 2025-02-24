@@ -1,0 +1,28 @@
+type: single # single|window, maybe add opt
+key: gnn #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: retailrocket #added in the end of the csv names
+  folder: data/retailrocket/fulltrain/
+  prefix: retailrocket
+results:
+  folder: results/
+
+metrics:
+- class: accuracy.MRR
+  length: [1, 2, 3, 5, 10, 15, 20, 50, 100]
+- class: accuracy.HitRate
+  length: [1, 2, 3, 5, 10, 15, 20, 50, 100]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+algorithms:
+- class: GRU4Rec_PyTorch_Official.GRURec.GRURecPytorch
+  params: {epoch: 15, loss: "bpr-max", constrained_embedding: True, embedding: 0, elu_param: 0.5, layers: 480, batch_size: 192, dropout_p_embed: 0.0, dropout_p_hidden: 0.15, learning_rate: 0.045, momentum: 0.5, n_sample: 2048, sample_alpha: 0.0, bpreg: 1.95, logq: 0}
+  key: GRURecPytorch
+  # GRURec-layers=480-batch_size=192-epoch=15-learning_rate=0.045-dropout_p_embed=0.0-dropout_p_hidden=0.15-momentum=0.5-sample_alpha=0.0-constrained_embedding=True-loss=bpr-max-embedding=0-elu_param=0.5-bpreg=1.95-logq=0

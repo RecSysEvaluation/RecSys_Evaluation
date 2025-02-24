@@ -1,0 +1,29 @@
+type: single # single|window, maybe add opt
+key: gnn #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: retailrocket #added in the end of the csv names
+  folder: data/retailrocket/fulltrain/
+  prefix: retailrocket
+results:
+  folder: results/rretailrocket1/flcsp/
+  
+metrics:
+- class: accuracy.MRR
+  length: [1, 2, 3, 5, 10, 15,20, 50, 100]
+- class: accuracy.HitRate
+  length: [1, 2, 3, 5, 10, 15, 20, 50, 100]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+
+algorithms:
+# GNN models
+- class: FLCSP.FLCSP_cate.FLCSP_cate      
+  params: {epoch: 20, lr: 0.0004, batch_size: 256, embedding_size: 100, hidden_size: 150, dropout: 0.2, l2: 0.00001}
+  key: FLCSP_cate
