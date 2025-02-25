@@ -1,0 +1,28 @@
+type: single # single|window, maybe add opt
+key: srgnn #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: retailrocket #added in the end of the csv names
+  folder: data/retailrocket/fulltrain/
+  prefix: retailrocket
+results:
+  folder: results/
+  
+metrics:
+- class: accuracy.MRR
+  length: [3,5,10,15,20]
+- class: accuracy.HitRate
+  length: [3,5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+
+algorithms:
+- class: sgnn.gnn.GGNN
+  params: {epoch: 15, lr: 0.004, batch_size: 256, embedding_size: 150, l2: 0.00001}
+  key: gnn

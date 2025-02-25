@@ -1,0 +1,28 @@
+type: single # single|window, maybe add opt
+key: cotrec #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: retailrocket #added in the end of the csv names
+  folder: data/retailrocket/fulltrain/
+  prefix: retailrocket
+results:
+  folder: results/
+  
+metrics:
+- class: accuracy.MRR
+  length: [3,5,10,15,20]
+- class: accuracy.HitRate
+  length: [3,5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+
+algorithms:
+- class: COTREC.COTREC.COTRECModel
+  params: {epoch: 20, lr: 0.003, batch_size: 100, embedding_size: 80, l2: 0.0001}
+  key: COTRECModel

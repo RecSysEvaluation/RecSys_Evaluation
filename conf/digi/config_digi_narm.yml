@@ -1,0 +1,29 @@
+type: single # single|window, maybe add opt
+key: narm #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: retailrocket #added in the end of the csv names
+  folder: data/retailrocket/fulltrain/
+  prefix: retailrocket
+results:
+  folder: results/retailrocket/narm/
+metrics:
+- class: accuracy.MRR
+  length: [1, 2, 3, 5, 10, 15,20, 50, 100]
+- class: accuracy.HitRate
+  length: [1, 2, 3, 5, 10, 15, 20, 50, 100]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+algorithms:
+- class: NARMModel.NARMModel.NARMModel
+  params: {epoch: 19, lr: 0.0008,  l2: 0.00045, embedding_size: 300, batch_size: 256}
+  key: narm
+
+  # narm-epoch=19-lr=0.0008-embedding_size=300-batch_size=256-l2=0.00045
+  

@@ -1,0 +1,28 @@
+type: single # single|window, maybe add opt
+key: gnrrw #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: rsc15 #added in the end of the csv names
+  folder: data/rsc15/fulltrain/rsc15By64/
+  prefix: rsc15
+results:
+  folder: results/
+  
+metrics:
+- class: accuracy.MRR
+  length: [3,5,10,15,20]
+- class: accuracy.HitRate
+  length: [3,5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+
+algorithms:
+- class: GNRRW.GNRRW.GNRRW
+  params: {epoch: 30, lr: 0.00889, batch_size: 80, embedding_size: 32, l2: 0.00001}
+  key: GNRRW

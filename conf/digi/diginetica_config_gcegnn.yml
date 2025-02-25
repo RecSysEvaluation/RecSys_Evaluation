@@ -1,0 +1,26 @@
+type: single # single|window, maybe add opt
+key: gcegnn #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: diginetica #added in the end of the csv names
+  folder: data/diginetica/fulltrain/
+  prefix: diginetica
+results:
+  folder: results/
+metrics:
+- class: accuracy.MRR
+  length: [3,5,10,15,20]
+- class: accuracy.HitRate
+  length: [3,5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+algorithms:
+- class: GCEGNN.GCEGNN.GCEGNN
+  params: {epoch: 4, lr: 0.001, batch_size: 20, embedding_size: 50, l2: 0.0001}
+  key: GCEGNN
